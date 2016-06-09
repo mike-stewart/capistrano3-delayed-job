@@ -15,6 +15,8 @@ namespace :delayed_job do
     unless fetch(:delayed_job_pools).nil?
       args << fetch(:delayed_job_pools, {}).map {|k,v| "--pool='#{k}:#{v}'" }.join(' ')
     end
+    args << "--daemon-options='#{fetch(:delayed_job_daemon_options).join(' ')}'" unless fetch(:delayed_job_daemon_options).nil?
+    args << "--force-kill-waitime #{fetch(:delayed_job_kill_waittime)}" unless fetch(:delayed_job_kill_waittime).nil?
     args.join(' ')
   end
 
